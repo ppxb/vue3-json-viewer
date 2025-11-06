@@ -1,0 +1,18 @@
+@import url(https://fonts.bunny.net/css?family=jetbrains-mono:400,700);
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+}
+
+:root {
+  --json-fmt-color: #666;
+
+  --json-fmt-property-color: #bd6476;
+  --json-fmt-number-color: #07a;
+  --json-fmt-string-color: #690;
+  --json-fmt-atom-color: #07a;
+}
