@@ -6,10 +6,8 @@ import JsonNode from './JsonNode.vue'
 const props = withDefaults(defineProps<{
   json: string
   defaultExpanded?: boolean
-  theme?: 'dark' | 'light'
 }>(), {
   defaultExpanded: true,
-  theme: 'light',
 })
 
 const rootNode = ref<InstanceType<typeof JsonNode> | null>(null)
@@ -56,7 +54,10 @@ defineExpose({
 </script>
 
 <template>
-  <div text-3 p2 rounded-lg overflow-auto whitespace-nowrap :class="`theme-${theme}`">
+  <div
+    class="text-3 p2 rounded-lg overflow-auto whitespace-nowrap bg-white dark:bg-[#1c1e23]"
+    border="~ solid #e1e4e8 dark:#36363a"
+  >
     <div v-if="parseError" class="json-error">
       <span>⚠️</span>
       <span>{{ parseError }}</span>
@@ -73,14 +74,6 @@ defineExpose({
 </template>
 
 <style scoped>
-.theme-light {
-  @apply bg-white border border-solid border-[#e1e4e8];
-}
-
-.theme-dark {
-  @apply bg-[#1c1e23] border border-solid border-[#36363a];
-}
-
 .theme-dark .json-error {
   @apply color-[#f48771] bg-[rgba(244,135,113,0.1)];
 }

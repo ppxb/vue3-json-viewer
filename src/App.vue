@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { useDark, useToggle } from '@vueuse/core'
 import { ref } from 'vue'
 
 import JsonViewer from './components/JsonViewer.vue'
 
+const isDark = useDark()
+
+const toggleDark = useToggle(isDark)
+
 const defaultExpanded = ref(true)
-const theme = ref<'dark' | 'light'>('light')
 const jsonViewer = ref<InstanceType<typeof JsonViewer> | null>(null)
 const copyStatus = ref<'idle' | 'success' | 'error'>('idle')
 const jsonStr = ref(`{
@@ -122,10 +126,6 @@ const jsonStr = ref(`{
   }
 }`)
 
-function toggleTheme() {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark'
-}
-
 function expandAll() {
   jsonViewer.value?.expandAll()
 }
@@ -185,8 +185,8 @@ async function copyJson() {
             Copy JSON
           </template>
         </button>
-        <button class="control-btn" @click="toggleTheme">
-          {{ theme === 'dark' ? '☀️ Light' : '🌙 Dark' }}
+        <button class="control-btn" @click="toggleDark()">
+          {{ isDark ? '☀️ Light' : '🌙 Dark' }}
         </button>
       </div>
     </div>
@@ -203,7 +203,6 @@ async function copyJson() {
         class="flex-[2] h-full"
         :json="jsonStr"
         :default-expanded="defaultExpanded"
-        :theme="theme"
       />
     </div>
   </div>

@@ -68,10 +68,10 @@ function formatValueForPreview(val: unknown, isNested = false) {
     return { text: 'undefined', class: 'value-undefined' }
   }
   if (typeof val === 'string') {
-    return { text: `"${val}"`, class: 'value-string' }
+    return { text: `"${val}"`, class: 'text-#690 dark:text-#ce9178' }
   }
   if (typeof val === 'boolean') {
-    return { text: String(val), class: 'value-boolean' }
+    return { text: String(val), class: 'text-#07a dark:text-#b5cea8' }
   }
   if (typeof val === 'number') {
     return { text: formatNumber(val), class: 'value-number', isHtml: true }
@@ -218,7 +218,7 @@ defineExpose({ expandAll, collapseAll })
         </div>
 
         <!-- 括号 -->
-        <span class="bracket" @click="toggleExpand">{{ openBracket }}</span>
+        <span class="text-#24292e dark:text-#d4d4d4" @click="toggleExpand">{{ openBracket }}</span>
 
         <template v-if="isExpanded && itemCount > 0">
           <button class="collapse-btn" @click="toggleExpand">
@@ -227,7 +227,7 @@ defineExpose({ expandAll, collapseAll })
           <button class="collapse-btn">
             ƒ
           </button>
-          <span class="count-label">{{ countLabel }}</span>
+          <span class="text-#999">{{ countLabel }}</span>
         </template>
 
         <!-- 折叠时的预览 -->
@@ -265,8 +265,8 @@ defineExpose({ expandAll, collapseAll })
             </span>
           </template>
 
-          <span class="bracket" @click="toggleExpand">{{ closeBracket }}</span>
-          <span v-if="!isLastItem && depth > 0" class="comma">,</span>
+          <span class="text-#24292e dark:text-#d4d4d4" @click="toggleExpand">{{ closeBracket }}</span>
+          <span v-if="!isLastItem && depth > 0" class="text-#24292e dark:text-#d4d4d4">,</span>
         </template>
       </div>
 
@@ -280,8 +280,8 @@ defineExpose({ expandAll, collapseAll })
           :is-last-item="index === entryKeys.length - 1" style="padding-left: 32px"
         />
         <div class="node-footer">
-          <span class="bracket">{{ closeBracket }}</span>
-          <span v-if="!isLastItem && depth > 0" class="comma">,</span>
+          <span class="text-#24292e dark:text-#d4d4d4">{{ closeBracket }}</span>
+          <span v-if="!isLastItem && depth > 0" class="text-#24292e dark:text-#d4d4d4">,</span>
         </div>
       </div>
     </template>
@@ -294,7 +294,7 @@ defineExpose({ expandAll, collapseAll })
           <span>:&nbsp;</span>
         </span>
         <span :class="valueClass" v-html="formattedValue" />
-        <span v-if="!isLastItem" class="comma">,</span>
+        <span v-if="!isLastItem" class="text-#24292e dark:text-#d4d4d4">,</span>
       </div>
     </template>
   </div>
@@ -402,20 +402,6 @@ defineExpose({ expandAll, collapseAll })
   color: #6a737d;
 }
 
-/* 逗号 */
-.comma {
-  margin-left: 0;
-  user-select: none;
-}
-
-.theme-dark .comma {
-  color: #d4d4d4;
-}
-
-.theme-light .comma {
-  color: #24292e;
-}
-
 /* 折叠按钮 */
 .collapse-btn {
   @apply text-[10px] w-4.5 h-4.5 flex items-center justify-center rounded-md cursor-pointer;
@@ -468,24 +454,6 @@ defineExpose({ expandAll, collapseAll })
   font-weight: 400;
 }
 
-/* 括号 */
-.bracket {
-  user-select: none;
-}
-
-.theme-dark .bracket {
-  color: #d4d4d4;
-}
-
-.theme-light .bracket {
-  color: #24292e;
-}
-
-/* 值类型样式 - 暗色主题 */
-.theme-dark .value-string {
-  color: #ce9178;
-}
-
 .theme-dark .value-number {
   color: #b5cea8;
 }
@@ -502,11 +470,6 @@ defineExpose({ expandAll, collapseAll })
 .theme-dark .value-array,
 .theme-dark .value-object {
   color: #858585;
-}
-
-/* 值类型样式 - 亮色主题 */
-.theme-light .value-string {
-  color: var(--json-fmt-string-color);
 }
 
 .theme-light .value-number {
