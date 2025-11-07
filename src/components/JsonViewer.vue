@@ -4,19 +4,19 @@ import { computed, ref } from 'vue'
 import JsonNode from './JsonNode.vue'
 
 const props = withDefaults(defineProps<{
-  jsonString: string
+  json: string
   defaultExpanded?: boolean
   theme?: 'dark' | 'light'
 }>(), {
   defaultExpanded: true,
-  theme: 'dark',
+  theme: 'light',
 })
 
 const rootNode = ref<InstanceType<typeof JsonNode> | null>(null)
 
-const parsedData = computed(() => {
+const parsedJSON = computed(() => {
   try {
-    return JSON.parse(props.jsonString)
+    return JSON.parse(props.json)
   }
   catch {
     return null
@@ -24,7 +24,7 @@ const parsedData = computed(() => {
 })
 
 const parseError = computed(() => {
-  if (parsedData.value === null && props.jsonString.trim()) {
+  if (parsedJSON.value === null && props.json.trim()) {
     return 'Invalid JSON format'
   }
   return null
@@ -40,7 +40,7 @@ function collapseAll() {
 
 async function copyJson() {
   try {
-    await navigator.clipboard.writeText(JSON.stringify(parsedData.value))
+    await navigator.clipboard.writeText(JSON.stringify(parsedJSON.value))
     return Promise.resolve(true)
   }
   catch (err) {
@@ -56,15 +56,15 @@ defineExpose({
 </script>
 
 <template>
-  <div class="json-viewer" :class="`theme-${theme}`">
+  <div text-3 p2 rounded-lg overflow-auto whitespace-nowrap :class="`theme-${theme}`">
     <div v-if="parseError" class="json-error">
-      <span class="error-icon">⚠️</span>
+      <span>⚠️</span>
       <span>{{ parseError }}</span>
     </div>
     <JsonNode
       v-else
       ref="rootNode"
-      :value="parsedData"
+      :value="parsedJSON"
       :key-name="null"
       :depth="0"
       :default-expanded="defaultExpanded"
@@ -73,46 +73,23 @@ defineExpose({
 </template>
 
 <style scoped>
-.json-viewer {
-  font-size: 12px;
-  padding: 8px;
-  border-radius: 8px;
-  overflow: auto;
+.theme-light {
+  @apply bg-white border border-solid border-[#e1e4e8];
 }
 
-/* 暗色主题 */
 .theme-dark {
-  background: #1e1e1e;
-  color: #d4d4d4;
+  @apply bg-[#1c1e23] border border-solid border-[#36363a];
 }
 
 .theme-dark .json-error {
-  color: #f48771;
-  background: rgba(244, 135, 113, 0.1);
-}
-
-/* 亮色主题 */
-.theme-light {
-  background: #ffffff;
-  color: #24292e;
-  border: 1px solid #e1e4e8;
+  @apply color-[#f48771] bg-[rgba(244,135,113,0.1)];
 }
 
 .theme-light .json-error {
-  color: #d73a49;
-  background: rgba(215, 58, 73, 0.1);
+  @apply color-[#f48771] bg-[rgba(215,58,73,0.1)];
 }
 
 .json-error {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  font-weight: 700;
-  border-radius: 6px;
-}
-
-.error-icon {
-  font-size: 14px;
+  @apply flex items-center gap2 p2 font-bold rounded-md;
 }
 </style>

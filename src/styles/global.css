@@ -1,11 +1,7 @@
-@import url(https://fonts.bunny.net/css?family=jetbrains-mono:400,700);
-
 html,
 body {
   margin: 0;
   padding: 0;
-
-  font-family: "JetBrains Mono", "Courier New", Courier, monospace;
 }
 
 :root {

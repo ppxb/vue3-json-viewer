@@ -210,7 +210,7 @@ defineExpose({ expandAll, collapseAll })
   <div class="json-node" :class="{ 'has-collapse-btn': showCollapseButton }">
     <!-- 对象或数组 -->
     <template v-if="isComplex">
-      <div class="node-header">
+      <div class="node-header font-mono">
         <!-- 键名 -->
         <div v-if="keyName !== null && typeof keyName !== 'number'" class="key-wrapper" :class="keyClass">
           <span>{{ keyName }}</span>
@@ -220,10 +220,12 @@ defineExpose({ expandAll, collapseAll })
         <!-- 括号 -->
         <span class="bracket" @click="toggleExpand">{{ openBracket }}</span>
 
-        <!-- 展开时显示折叠按钮和数量 -->
         <template v-if="isExpanded && itemCount > 0">
           <button class="collapse-btn" @click="toggleExpand">
-            <span class="collapse-icon">−</span>
+            −
+          </button>
+          <button class="collapse-btn">
+            ƒ
           </button>
           <span class="count-label">{{ countLabel }}</span>
         </template>
@@ -269,7 +271,7 @@ defineExpose({ expandAll, collapseAll })
       </div>
 
       <!-- 展开的内容 -->
-      <div v-if="isExpanded" class="node-content">
+      <div v-if="isExpanded" class="node-content font-mono">
         <div class="vertical-line" />
         <JsonNode
           v-for="(key, index) in entryKeys" :key="key" ref="childNodes"
@@ -322,7 +324,6 @@ defineExpose({ expandAll, collapseAll })
 
 .node-content>.json-node {
   position: relative;
-  z-index: 1;
 }
 
 .vertical-line {
@@ -363,11 +364,11 @@ defineExpose({ expandAll, collapseAll })
 }
 
 .theme-dark .count-label {
-  color: #99999980;
+  color: #999;
 }
 
 .theme-light .count-label {
-  color: #99999980;
+  color: #999;
 }
 
 /* 预览容器 */
@@ -417,21 +418,12 @@ defineExpose({ expandAll, collapseAll })
 
 /* 折叠按钮 */
 .collapse-btn {
-  background: none;
-  border: none;
-  padding: 4px 4px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
+  @apply text-[10px] w-4.5 h-4.5 flex items-center justify-center rounded-md cursor-pointer;
 }
 
 .theme-dark .collapse-btn {
   color: #858585;
-  border: 1px solid #4a4a4a;
+  border: 1px solid #36363a;
 }
 
 .theme-dark .collapse-btn:hover {
@@ -442,7 +434,7 @@ defineExpose({ expandAll, collapseAll })
 
 .theme-light .collapse-btn {
   color: #6a737d;
-  border: 1px solid #d1d5da;
+  border: 1px solid #e1e4e8;
 }
 
 .theme-light .collapse-btn:hover {
@@ -499,13 +491,12 @@ defineExpose({ expandAll, collapseAll })
 }
 
 .theme-dark .value-boolean {
-  color: #569cd6;
-  font-weight: 600;
+  color: #b5cea8;
 }
 
 .theme-dark .value-null,
 .theme-dark .value-undefined {
-  color: #569cd6;
+  color: #bd6476;
 }
 
 .theme-dark .value-array,
