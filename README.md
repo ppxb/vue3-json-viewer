@@ -4,8 +4,6 @@ This example does not use any external dependencies and implemented using Vue 3 
 
 ## Screenshots
 
-![normal](scrreenshot/wechat_2025-11-06_170458_563.png)
+![light-mode](screenshot/wechat_2025-11-07_121913_814.png)
 
-![expand](scrreenshot/wechat_2025-11-06_170526_421.png)
-
-![dark mode](scrreenshot/wechat_2025-11-06_170545_467.png)
+![dark-mode](screenshot/wechat_2025-11-07_121928_534.png)
