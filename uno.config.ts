@@ -51,7 +51,7 @@ export default defineConfig({
     presetWebFonts({
       provider: 'bunny',
       fonts: {
-        mono: ['DM Mono:400,700'],
+        mono: ['DM Mono:400,500,700'],
       },
     }),
     presetAttributify(),
