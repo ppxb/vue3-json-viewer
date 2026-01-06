@@ -193,9 +193,11 @@ async function copyToClipboard() {
   try {
     const jsonString = JSON.stringify(props.value, null, 2)
     await navigator.clipboard.writeText(jsonString)
+    // with your own message util
   }
-  catch (err) {
-    console.error('Failed to copy to clipboard:', err)
+  catch (error) {
+    // with your own message util
+    console.error('Failed to copy to clipboard:', error)
   }
 }
 
