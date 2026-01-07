@@ -329,7 +329,7 @@ defineExpose({ expandAll, collapseAll })
 <style scoped>
 .json-node {
   position: relative;
-  margin: 0 2px;
+  margin: 2px 0;
 }
 
 .json-node:not(.has-collapse-btn) .node-header:hover {
