@@ -205,7 +205,7 @@ defineExpose({ expandAll, collapseAll })
 </script>
 
 <template>
-  <div class="json-node my-0.5 relative" :class="{ 'has-collapse-btn': showCollapseButton }">
+  <div class="json-node" :class="{ 'has-collapse-btn': showCollapseButton }">
     <template v-if="isComplex">
       <div class="node-header font-mono rounded" flex="~ items-center gap1">
         <div
@@ -327,6 +327,11 @@ defineExpose({ expandAll, collapseAll })
 </template>
 
 <style scoped>
+.json-node {
+  position: relative;
+  margin: 0 2px;
+}
+
 .json-node:not(.has-collapse-btn) .node-header:hover {
   background-color: rgba(187, 187, 187, 0.25);
 }
