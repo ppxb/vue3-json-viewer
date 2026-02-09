@@ -2,7 +2,7 @@
 
 This example does not use any external dependencies and implemented using Vue 3 and TypeScript.
 
-You can easily replace unocss with tailwindcss or regular CSS styles.
+You can easily replace `unocss` with `tailwindcss` or regular CSS styles.
 
 ## Screenshots
 
