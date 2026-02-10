@@ -1,2 +1,11 @@
-export { default as JsonNode } from '@/components/JsonNode.vue'
-export { default as JsonViewer } from '@/components/JsonViewer.vue'
+import './styles/base.css'
+
+export { JsonNode } from './components/JsonNode'
+export { JsonViewer } from './components/JsonViewer'
+
+export type {
+  JsonNodeExposed,
+  JsonViewerConfig,
+  JsonViewerExposed,
+  JsonViewerTheme,
+} from './components/JsonViewer/JsonViewer.types'

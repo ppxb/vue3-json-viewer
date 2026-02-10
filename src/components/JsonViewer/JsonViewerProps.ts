@@ -1,14 +1,33 @@
+import type { PropType } from 'vue'
+import type { JsonViewerTheme } from './JsonViewer.types'
+
 export const jsonViewerProps = {
   json: {
-    default: '',
     type: String,
+    default: '',
   },
   defaultExpanded: {
-    default: true,
     type: Boolean,
+    default: true,
   },
   theme: {
-    default: '',
-    type: Object,
+    type: Object as PropType<JsonViewerTheme>,
+    default: undefined,
   },
-}
+  showCopyButton: {
+    type: Boolean,
+    default: true,
+  },
+  showCollapseButton: {
+    type: Boolean,
+    default: true,
+  },
+  maxDepth: {
+    type: Number,
+    default: Infinity,
+  },
+  copyable: {
+    type: Boolean,
+    default: true,
+  },
+} as const
