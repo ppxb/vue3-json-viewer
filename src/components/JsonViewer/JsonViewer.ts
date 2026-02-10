@@ -1,8 +1,8 @@
 import type { SetupContext } from 'vue'
 import type { InjectedJsonViewer, JsonViewerConfig, JsonViewerExposed, JsonViewerTheme } from './JsonViewer.types'
 import { computed, defineComponent, h, provide, reactive, ref } from 'vue'
-import { DEFAULT_CONFIG, DEFAULT_THEME } from '@/shared/constants'
-import { injectJsonViewer } from '@/shared/provide'
+import { DEFAULT_CONFIG, DEFAULT_THEME } from '../../shared/constants'
+import { injectJsonViewer } from '../../shared/provide'
 import { JsonNode } from '../JsonNode/JsonNode'
 import { jsonViewerProps } from './JsonViewerProps'
 

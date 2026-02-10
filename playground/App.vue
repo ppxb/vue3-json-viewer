@@ -1,16 +1,17 @@
 <script setup lang="ts">
+import type { JsonViewerExposed } from '../src'
 import { useDark, useToggle } from '@vueuse/core'
 import { ref } from 'vue'
 
 import { JsonViewer } from '../src'
 
 const isDark = useDark()
-
 const toggleDark = useToggle(isDark)
 
 const defaultExpanded = ref(true)
-const jsonViewer = ref<InstanceType<typeof JsonViewer> | null>(null)
+const jsonViewer = ref<JsonViewerExposed | null>(null)
 const copyStatus = ref<'idle' | 'success' | 'error'>('idle')
+
 const jsonStr = ref(`{
   "code": "0",
   "msg": "success",
@@ -47,7 +48,7 @@ const jsonStr = ref(`{
         "status": "PENDING",
         "createTime": "2025-06-21T07:44:17.458608533",
         "updateTime": "2025-11-05T07:44:17.458612911"
-      },
+      }
     ],
     "total": 1000,
     "current": 1,
@@ -65,14 +66,11 @@ function collapseAll() {
 }
 
 async function copyJson() {
-  const success = await jsonViewer.value?.copyJson()
+  if (!jsonViewer.value)
+    return
+  const success = await jsonViewer.value.copyJson()
 
-  if (success) {
-    copyStatus.value = 'success'
-  }
-  else {
-    copyStatus.value = 'error'
-  }
+  copyStatus.value = success ? 'success' : 'error'
 
   setTimeout(() => {
     copyStatus.value = 'idle'
@@ -81,24 +79,20 @@ async function copyJson() {
 </script>
 
 <template>
-  <div
-    p4 h-screen
-    flex="~ col gap4"
-    class="bg-[#cdcdcd1a]"
-  >
-    <div flex="~ justify-between items-center" font="mono bold">
-      <h1 text-3xl font-bold>
+  <div class="app-container">
+    <div class="header">
+      <h1 class="title">
         Vue3 JSON Viewer
       </h1>
-      <div p2 flex="~ gap2">
-        <button class="text-sm p2 border border-[#e1e4e8] rounded-lg border-solid bg-white cursor-pointer" @click="expandAll">
+      <div class="header-actions">
+        <button class="btn" @click="expandAll">
           Expand All
         </button>
-        <button class="text-sm p2 border border-[#e1e4e8] rounded-lg border-solid bg-white cursor-pointer" @click="collapseAll">
+        <button class="btn" @click="collapseAll">
           Collapse All
         </button>
         <button
-          class="text-sm p2 border border-[#e1e4e8] rounded-lg border-solid bg-white cursor-pointer"
+          class="btn copy-btn"
           :class="{
             'copy-success': copyStatus === 'success',
             'copy-error': copyStatus === 'error',
@@ -115,25 +109,101 @@ async function copyJson() {
             Copy JSON
           </template>
         </button>
-        <button class="text-sm p2 border border-[#e1e4e8] rounded-lg border-solid bg-white cursor-pointer" @click="toggleDark()">
+        <button class="btn" @click="toggleDark()">
           {{ isDark ? '☀️ Light' : '🌙 Dark' }}
         </button>
       </div>
     </div>
 
-    <div flex="~ gap4" flex-1 min-h-0>
+    <div class="content">
       <textarea
         v-model="jsonStr"
-        text-sm font-mono p2 outline-none rounded-lg flex-1 h-full
-        border="~ solid #e1e4e8"
+        class="json-input"
       />
 
       <JsonViewer
         ref="jsonViewer"
-        class="flex-[2] h-full"
+        class="json-viewer"
         :json="jsonStr"
         :default-expanded="defaultExpanded"
       />
     </div>
   </div>
 </template>
+
+<style scoped>
+.app-container {
+  padding: 1rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f1f1f1;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.header-actions {
+  padding: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn {
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  border: 1px solid #e1e4e8;
+  border-radius: 0.5rem;
+  background-color: white;
+  cursor: pointer;
+  border-style: solid;
+}
+
+.copy-btn.copy-success {
+  background-color: #f0fff4;
+  border-color: #4ade80;
+  color: #16a34a;
+}
+
+.copy-btn.copy-error {
+  background-color: #fff5f5;
+  border-color: #f87171;
+  color: #dc2626;
+}
+
+.content {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.json-input {
+  font-size: 0.875rem;
+  font-family: monospace;
+  padding: 0.5rem;
+  outline: none;
+  border-radius: 0.5rem;
+  flex: 1;
+  height: 100%;
+  border: 1px solid #e1e4e8;
+  border-style: solid;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.json-viewer {
+  flex: 1;
+}
+</style>

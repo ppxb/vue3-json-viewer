@@ -1,8 +1,8 @@
 import type { VNode } from 'vue'
 import type { JsonNodeExposed } from '../JsonViewer/JsonViewer.types'
 import { computed, defineComponent, h, inject, ref } from 'vue'
-import { injectJsonViewer } from '@/shared/provide'
-import { formatNumber, formatValueForPreview, getValueType, isComplexType } from '@/utils/format'
+import { injectJsonViewer } from '../../shared/provide'
+import { formatNumber, formatValueForPreview, getValueType, isComplexType } from '../../utils/format'
 import { jsonNodeProps } from './JsonNodeProps'
 
 export const JsonNode = defineComponent({
