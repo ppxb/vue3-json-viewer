@@ -160,10 +160,10 @@ export const JsonNode = defineComponent({
       }
     }
 
-    expose<JsonNodeExposed>({
+    expose({
       expandAll,
       collapseAll,
-    })
+    } satisfies JsonNodeExposed)
 
     return () => {
       const children: VNode[] = []
