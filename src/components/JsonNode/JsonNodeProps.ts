@@ -1,11 +1,23 @@
+import type { PropType } from 'vue'
+
+export type JsonValue
+  = | string
+    | number
+    | boolean
+    | null
+    | undefined
+    | JsonValue[]
+    | { [key: string]: JsonValue }
+
 export const jsonNodeProps = {
   value: {
-    type: null,
+    type: [String, Number, Boolean, Object, Array] as PropType<JsonValue>,
     default: null,
   },
   keyName: {
-    type: [String, Number],
+    type: [String, Number] as PropType<string | number | null>,
     default: null,
+    validator: (v: unknown) => v === null || typeof v === 'string' || typeof v === 'number',
   },
   depth: {
     type: Number,
@@ -19,4 +31,4 @@ export const jsonNodeProps = {
     type: Boolean,
     default: false,
   },
-} as const
+}
