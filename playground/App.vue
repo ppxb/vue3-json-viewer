@@ -191,7 +191,6 @@ async function copyJson() {
 
 .json-input {
   font-size: 0.875rem;
-  font-family: monospace;
   padding: 0.5rem;
   outline: none;
   border-radius: 0.5rem;

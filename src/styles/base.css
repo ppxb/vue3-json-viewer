@@ -1,4 +1,9 @@
-/* Base styles for JSON Viewer */
+@import url(https://fonts.bunny.net/css?family=dm-mono:400,700);
+
+body {
+  font-family: "DM Mono";
+}
+
 .json-viewer {
   font-size: 12px;
   padding: 8px;
@@ -7,7 +12,6 @@
   border: 1px solid var(--json-viewer-border, #e1e4e8);
   white-space: nowrap;
   overflow: auto;
-  font-family: "Consolas", "Monaco", "Courier New", monospace;
 }
 
 /* Dark mode support */
@@ -42,17 +46,16 @@
   margin: 2px 0;
 }
 
-/* Node header */
 .json-viewer__node-header {
   display: flex;
   align-items: center;
   gap: 4px;
   border-radius: 4px;
-  font-family: "Consolas", "Monaco", "Courier New", monospace;
 }
 
 .json-viewer__node-header:not(.json-viewer__node-header--has-controls):hover {
   background-color: rgba(187, 187, 187, 0.25);
+  outline: 3px solid rgba(187, 187, 187, 0.25);
 }
 
 /* Key */
@@ -237,9 +240,7 @@
   content: "\0192";
 }
 
-/* Expanded content */
 .json-viewer__expanded {
-  font-family: "Consolas", "Monaco", "Courier New", monospace;
   position: relative;
 }
 

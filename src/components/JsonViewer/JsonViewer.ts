@@ -3,7 +3,7 @@ import type { InjectedJsonViewer, JsonViewerConfig, JsonViewerExposed, JsonViewe
 import { computed, defineComponent, h, provide, reactive, ref } from 'vue'
 import { DEFAULT_CONFIG, DEFAULT_THEME } from '../../shared/constants'
 import { injectJsonViewer } from '../../shared/provide'
-import { JsonNode } from '../JsonNode/JsonNode'
+import { JsonNode } from '../JsonNode'
 import { jsonViewerProps } from './JsonViewerProps'
 
 export const JsonViewer = defineComponent({

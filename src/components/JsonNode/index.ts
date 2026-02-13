@@ -1,2 +1,2 @@
-export { JsonNode } from './JsonNode'
-export { jsonNodeProps } from './JsonNodeProps'
+export * from './JsonNode'
+export * from './JsonNodeProps'
