@@ -5,6 +5,18 @@ import { injectJsonViewer } from '../../shared/provide'
 import { formatNumber, formatValueForPreview, getValueType, isComplexType } from '../../utils/format'
 import { jsonNodeProps } from './JsonNodeProps'
 
+interface ArrayPreviewItem {
+  text: string
+  class: string
+  isMore?: boolean
+}
+
+interface ObjectPreviewItem {
+  key: string
+  value: { text: string, class: string, isHtml?: boolean }
+  isMore?: boolean
+}
+
 export const JsonNode = defineComponent({
   name: 'JsonNode',
   props: jsonNodeProps,
@@ -39,14 +51,14 @@ export const JsonNode = defineComponent({
     const openBracket = computed(() => (valueType.value === 'array' ? '[' : '{'))
     const closeBracket = computed(() => (valueType.value === 'array' ? ']' : '}'))
 
-    const arrayCollapsedPreview = computed(() => {
+    const arrayCollapsedPreview = computed<ArrayPreviewItem[]>(() => {
       if (valueType.value !== 'array' || itemCount.value === 0) {
         return []
       }
 
       const count = itemCount.value
       const displayCount = Math.min(count, 4)
-      const items = Array.from({ length: displayCount }).fill(null).map(() => ({
+      const items: ArrayPreviewItem[] = Array.from({ length: displayCount }).fill(null).map(() => ({
         text: '{…}',
         class: 'json-viewer__preview',
       }))
@@ -56,12 +68,12 @@ export const JsonNode = defineComponent({
           text: `… ${count - 4} more`,
           class: 'json-viewer__preview',
           isMore: true,
-        } as any)
+        })
       }
       return items
     })
 
-    const objectCollapsedPreview = computed(() => {
+    const objectCollapsedPreview = computed<ObjectPreviewItem[]>(() => {
       if (valueType.value !== 'object') {
         return []
       }
@@ -73,10 +85,10 @@ export const JsonNode = defineComponent({
         return []
       }
 
-      const items = keys.slice(0, 4).map(key => ({
+      const items: ObjectPreviewItem[] = keys.slice(0, 4).map(key => ({
         key,
         value: formatValueForPreview(obj[key], true),
-        isMore: null,
+        isMore: false,
       }))
 
       if (keys.length > 4) {
@@ -84,7 +96,7 @@ export const JsonNode = defineComponent({
           key: '',
           value: { text: `… ${keys.length - 4} more`, class: 'json-viewer__preview' },
           isMore: true,
-        } as any)
+        })
       }
       return items
     })
