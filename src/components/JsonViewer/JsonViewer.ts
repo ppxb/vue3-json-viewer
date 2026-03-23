@@ -40,6 +40,7 @@ export const JsonViewer = defineComponent({
       json: props.json,
       defaultExpanded: props.defaultExpanded,
       theme: props.theme,
+      colorMode: props.colorMode,
       showCopyButton: props.showCopyButton,
       showCollapseButton: props.showCollapseButton,
       maxDepth: props.maxDepth,
@@ -76,6 +77,8 @@ export const JsonViewer = defineComponent({
       }
     })
 
+    const viewerClass = computed(() => ['json-viewer', `json-viewer--${props.colorMode}`])
+
     function expandAll() {
       rootNode.value?.expandAll()
     }
@@ -94,12 +97,12 @@ export const JsonViewer = defineComponent({
       }
     }
 
-    const provided: InjectedJsonViewer = reactive({
+    const provided: InjectedJsonViewer = {
       config,
       theme: mergedTheme,
       expandAll,
       collapseAll,
-    })
+    }
 
     provide(injectJsonViewer, provided)
 
@@ -135,7 +138,7 @@ export const JsonViewer = defineComponent({
       return h(
         'div',
         {
-          class: 'json-viewer',
+          class: viewerClass.value,
           style: themeStyles.value,
         },
         children,

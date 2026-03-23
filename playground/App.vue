@@ -1,12 +1,21 @@
 <script setup lang="ts">
-import type { JsonViewerExposed } from '../src'
-import { useDark, useToggle } from '@vueuse/core'
-import { ref } from 'vue'
+import type { JsonViewerColorMode, JsonViewerExposed } from '../src'
+import { useColorMode } from '@vueuse/core'
+import { computed, ref } from 'vue'
 
 import { JsonViewer } from '../src'
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const colorMode = useColorMode({
+  modes: {
+    system: 'auto',
+    light: 'light',
+    dark: 'dark',
+  },
+})
+
+const viewerColorMode = computed<JsonViewerColorMode>(() => {
+  return colorMode.value === 'auto' ? 'system' : colorMode.value
+})
 
 const defaultExpanded = ref(true)
 const jsonViewer = ref<JsonViewerExposed | null>(null)
@@ -100,18 +109,38 @@ async function copyJson() {
           @click="copyJson"
         >
           <template v-if="copyStatus === 'success'">
-            ✓ Copied
+            OK Copied
           </template>
           <template v-else-if="copyStatus === 'error'">
-            ✗ Error
+            X Error
           </template>
           <template v-else>
             Copy JSON
           </template>
         </button>
-        <button class="btn" @click="toggleDark()">
-          {{ isDark ? '☀️ Light' : '🌙 Dark' }}
-        </button>
+        <div class="theme-switch">
+          <button
+            class="btn"
+            :class="{ active: viewerColorMode === 'light' }"
+            @click="colorMode = 'light'"
+          >
+            Light
+          </button>
+          <button
+            class="btn"
+            :class="{ active: viewerColorMode === 'dark' }"
+            @click="colorMode = 'dark'"
+          >
+            Dark
+          </button>
+          <button
+            class="btn"
+            :class="{ active: viewerColorMode === 'system' }"
+            @click="colorMode = 'system'"
+          >
+            System
+          </button>
+        </div>
       </div>
     </div>
 
@@ -126,6 +155,7 @@ async function copyJson() {
         class="json-viewer"
         :json="jsonStr"
         :default-expanded="defaultExpanded"
+        :color-mode="viewerColorMode"
       />
     </div>
   </div>
@@ -158,6 +188,12 @@ async function copyJson() {
   padding: 0.5rem;
   display: flex;
   gap: 0.5rem;
+  align-items: center;
+}
+
+.theme-switch {
+  display: flex;
+  gap: 0.25rem;
 }
 
 .btn {
@@ -168,6 +204,11 @@ async function copyJson() {
   background-color: white;
   cursor: pointer;
   border-style: solid;
+}
+
+.btn.active {
+  border-color: #0366d6;
+  color: #0366d6;
 }
 
 .copy-btn.copy-success {

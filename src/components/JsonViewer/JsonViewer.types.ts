@@ -1,5 +1,7 @@
 import type { Ref } from 'vue'
 
+export type JsonViewerColorMode = 'light' | 'dark' | 'system'
+
 export interface JsonViewerTheme {
   key?: string
   keyDark?: string
@@ -31,6 +33,7 @@ export interface JsonViewerConfig {
   json: string
   defaultExpanded: boolean
   theme?: JsonViewerTheme
+  colorMode: JsonViewerColorMode
   showCopyButton: boolean
   showCollapseButton: boolean
   maxDepth: number

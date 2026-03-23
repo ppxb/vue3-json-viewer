@@ -8,24 +8,74 @@ body {
   font-size: 12px;
   padding: 8px;
   border-radius: 8px;
-  background-color: var(--json-viewer-bg, #ffffff);
-  border: 1px solid var(--json-viewer-border, #e1e4e8);
+  --json-viewer-key-current: var(--json-viewer-key, #bd6476);
+  --json-viewer-string-current: var(--json-viewer-string, #690);
+  --json-viewer-number-current: var(--json-viewer-number, #07a);
+  --json-viewer-boolean-current: var(--json-viewer-boolean, #07a);
+  --json-viewer-null-current: var(--json-viewer-null, #6f42c1);
+  --json-viewer-undefined-current: var(--json-viewer-undefined, #999);
+  --json-viewer-bracket-current: var(--json-viewer-bracket, #24292e);
+  --json-viewer-bg-current: var(--json-viewer-bg, #ffffff);
+  --json-viewer-border-current: var(--json-viewer-border, #e1e4e8);
+  --json-viewer-button-bg-current: var(--json-viewer-button-bg, transparent);
+  --json-viewer-button-border-current: var(--json-viewer-button-border, #e1e4e8);
+  --json-viewer-button-text-current: var(--json-viewer-button-text, #6a737d);
+  --json-viewer-button-hover-current: rgba(0, 0, 0, 0.05);
+  background-color: var(--json-viewer-bg-current);
+  border: 1px solid var(--json-viewer-border-current);
   white-space: nowrap;
   overflow: auto;
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .json-viewer {
-    background-color: var(--json-viewer-bg-dark, #1c1e23);
-    border-color: var(--json-viewer-border-dark, #36363a);
-  }
+.json-viewer--light {
+  --json-viewer-key-current: var(--json-viewer-key, #bd6476);
+  --json-viewer-string-current: var(--json-viewer-string, #690);
+  --json-viewer-number-current: var(--json-viewer-number, #07a);
+  --json-viewer-boolean-current: var(--json-viewer-boolean, #07a);
+  --json-viewer-null-current: var(--json-viewer-null, #6f42c1);
+  --json-viewer-undefined-current: var(--json-viewer-undefined, #999);
+  --json-viewer-bracket-current: var(--json-viewer-bracket, #24292e);
+  --json-viewer-bg-current: var(--json-viewer-bg, #ffffff);
+  --json-viewer-border-current: var(--json-viewer-border, #e1e4e8);
+  --json-viewer-button-bg-current: var(--json-viewer-button-bg, transparent);
+  --json-viewer-button-border-current: var(--json-viewer-button-border, #e1e4e8);
+  --json-viewer-button-text-current: var(--json-viewer-button-text, #6a737d);
+  --json-viewer-button-hover-current: rgba(0, 0, 0, 0.05);
 }
 
-/* Or use class-based dark mode */
-.dark .json-viewer {
-  background-color: var(--json-viewer-bg-dark, #1c1e23);
-  border-color: var(--json-viewer-border-dark, #36363a);
+.json-viewer--dark,
+.dark .json-viewer:not(.json-viewer--light) {
+  --json-viewer-key-current: var(--json-viewer-key-dark, #9cdcfe);
+  --json-viewer-string-current: var(--json-viewer-string-dark, #ce9178);
+  --json-viewer-number-current: var(--json-viewer-number-dark, #b5cea8);
+  --json-viewer-boolean-current: var(--json-viewer-boolean-dark, #b5cea8);
+  --json-viewer-null-current: var(--json-viewer-null-dark, #bd6476);
+  --json-viewer-undefined-current: var(--json-viewer-undefined-dark, #999);
+  --json-viewer-bracket-current: var(--json-viewer-bracket-dark, #d4d4d4);
+  --json-viewer-bg-current: var(--json-viewer-bg-dark, #1c1e23);
+  --json-viewer-border-current: var(--json-viewer-border-dark, #36363a);
+  --json-viewer-button-bg-current: var(--json-viewer-button-bg-dark, transparent);
+  --json-viewer-button-border-current: var(--json-viewer-button-border-dark, #36363a);
+  --json-viewer-button-text-current: var(--json-viewer-button-text-dark, #858585);
+  --json-viewer-button-hover-current: rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .json-viewer--system {
+    --json-viewer-key-current: var(--json-viewer-key-dark, #9cdcfe);
+    --json-viewer-string-current: var(--json-viewer-string-dark, #ce9178);
+    --json-viewer-number-current: var(--json-viewer-number-dark, #b5cea8);
+    --json-viewer-boolean-current: var(--json-viewer-boolean-dark, #b5cea8);
+    --json-viewer-null-current: var(--json-viewer-null-dark, #bd6476);
+    --json-viewer-undefined-current: var(--json-viewer-undefined-dark, #999);
+    --json-viewer-bracket-current: var(--json-viewer-bracket-dark, #d4d4d4);
+    --json-viewer-bg-current: var(--json-viewer-bg-dark, #1c1e23);
+    --json-viewer-border-current: var(--json-viewer-border-dark, #36363a);
+    --json-viewer-button-bg-current: var(--json-viewer-button-bg-dark, transparent);
+    --json-viewer-button-border-current: var(--json-viewer-button-border-dark, #36363a);
+    --json-viewer-button-text-current: var(--json-viewer-button-text-dark, #858585);
+    --json-viewer-button-hover-current: rgba(255, 255, 255, 0.1);
+  }
 }
 
 /* Error display */
@@ -64,46 +114,16 @@ body {
 }
 
 .json-viewer__key {
-  color: var(--json-viewer-key, #bd6476);
-}
-
-@media (prefers-color-scheme: dark) {
-  .json-viewer__key {
-    color: var(--json-viewer-key-dark, #9cdcfe);
-  }
-}
-
-.dark .json-viewer__key {
-  color: var(--json-viewer-key-dark, #9cdcfe);
+  color: var(--json-viewer-key-current);
 }
 
 /* Value types */
 .json-viewer__string {
-  color: var(--json-viewer-string, #690);
-}
-
-@media (prefers-color-scheme: dark) {
-  .json-viewer__string {
-    color: var(--json-viewer-string-dark, #ce9178);
-  }
-}
-
-.dark .json-viewer__string {
-  color: var(--json-viewer-string-dark, #ce9178);
+  color: var(--json-viewer-string-current);
 }
 
 .json-viewer__number {
-  color: var(--json-viewer-number, #07a);
-}
-
-@media (prefers-color-scheme: dark) {
-  .json-viewer__number {
-    color: var(--json-viewer-number-dark, #b5cea8);
-  }
-}
-
-.dark .json-viewer__number {
-  color: var(--json-viewer-number-dark, #b5cea8);
+  color: var(--json-viewer-number-current);
 }
 
 .json-viewer__number-separator {
@@ -111,62 +131,22 @@ body {
 }
 
 .json-viewer__boolean {
-  color: var(--json-viewer-boolean, #07a);
-}
-
-@media (prefers-color-scheme: dark) {
-  .json-viewer__boolean {
-    color: var(--json-viewer-boolean-dark, #b5cea8);
-  }
-}
-
-.dark .json-viewer__boolean {
-  color: var(--json-viewer-boolean-dark, #b5cea8);
+  color: var(--json-viewer-boolean-current);
 }
 
 .json-viewer__null {
-  color: var(--json-viewer-null, #6f42c1);
-}
-
-@media (prefers-color-scheme: dark) {
-  .json-viewer__null {
-    color: var(--json-viewer-null-dark, #bd6476);
-  }
-}
-
-.dark .json-viewer__null {
-  color: var(--json-viewer-null-dark, #bd6476);
+  color: var(--json-viewer-null-current);
 }
 
 .json-viewer__undefined {
-  color: var(--json-viewer-undefined, #999);
-}
-
-@media (prefers-color-scheme: dark) {
-  .json-viewer__undefined {
-    color: var(--json-viewer-undefined-dark, #999);
-  }
-}
-
-.dark .json-viewer__undefined {
-  color: var(--json-viewer-undefined-dark, #999);
+  color: var(--json-viewer-undefined-current);
 }
 
 /* Brackets and delimiters */
 .json-viewer__bracket {
-  color: var(--json-viewer-bracket, #24292e);
+  color: var(--json-viewer-bracket-current);
   user-select: none;
   cursor: pointer;
-}
-
-@media (prefers-color-scheme: dark) {
-  .json-viewer__bracket {
-    color: var(--json-viewer-bracket-dark, #d4d4d4);
-  }
-}
-
-.dark .json-viewer__bracket {
-  color: var(--json-viewer-bracket-dark, #d4d4d4);
 }
 
 .json-viewer__colon {
@@ -200,36 +180,14 @@ body {
   justify-content: center;
   border-radius: 6px;
   cursor: pointer;
-  background-color: var(--json-viewer-button-bg, transparent);
-  border: 1px solid var(--json-viewer-button-border, #e1e4e8);
-  color: var(--json-viewer-button-text, #6a737d);
+  background-color: var(--json-viewer-button-bg-current);
+  border: 1px solid var(--json-viewer-button-border-current);
+  color: var(--json-viewer-button-text-current);
   transition: background-color 0.2s;
 }
 
 .json-viewer__button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-@media (prefers-color-scheme: dark) {
-  .json-viewer__button {
-    background-color: var(--json-viewer-button-bg-dark, transparent);
-    border-color: var(--json-viewer-button-border-dark, #36363a);
-    color: var(--json-viewer-button-text-dark, #858585);
-  }
-
-  .json-viewer__button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-}
-
-.dark .json-viewer__button {
-  background-color: var(--json-viewer-button-bg-dark, transparent);
-  border-color: var(--json-viewer-button-border-dark, #36363a);
-  color: var(--json-viewer-button-text-dark, #858585);
-}
-
-.dark .json-viewer__button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--json-viewer-button-hover-current);
 }
 
 .json-viewer__button--collapse::before {

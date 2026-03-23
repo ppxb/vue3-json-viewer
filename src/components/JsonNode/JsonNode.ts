@@ -342,9 +342,9 @@ export const JsonNode = defineComponent({
                     childNodes.value[index] = el
                 },
                 key,
-                value: valueType.value === 'array'
+                value: (valueType.value === 'array'
                   ? (props.value as unknown[])[key as number]
-                  : (props.value as Record<string, unknown>)[key],
+                  : (props.value as Record<string, unknown>)[key]) as any,
                 keyName: key,
                 depth: props.depth + 1,
                 defaultExpanded: props.defaultExpanded,

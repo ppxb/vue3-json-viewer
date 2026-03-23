@@ -4,6 +4,7 @@ export { JsonNode } from './components/JsonNode'
 export { JsonViewer } from './components/JsonViewer'
 
 export type {
+  JsonViewerColorMode,
   JsonNodeExposed,
   JsonViewerConfig,
   JsonViewerExposed,

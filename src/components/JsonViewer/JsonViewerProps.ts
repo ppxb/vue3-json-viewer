@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import type { JsonViewerTheme } from './JsonViewer.types'
+import type { JsonViewerColorMode, JsonViewerTheme } from './JsonViewer.types'
 
 export const jsonViewerProps = {
   json: {
@@ -13,6 +13,10 @@ export const jsonViewerProps = {
   theme: {
     type: Object as PropType<JsonViewerTheme>,
     default: undefined,
+  },
+  colorMode: {
+    type: String as PropType<JsonViewerColorMode>,
+    default: 'system',
   },
   showCopyButton: {
     type: Boolean,

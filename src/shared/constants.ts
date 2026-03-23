@@ -29,6 +29,7 @@ export const DEFAULT_THEME: JsonViewerTheme = {
 
 export const DEFAULT_CONFIG: Partial<JsonViewerConfig> = {
   defaultExpanded: true,
+  colorMode: 'system',
   showCopyButton: true,
   showCollapseButton: true,
   maxDepth: Infinity,
